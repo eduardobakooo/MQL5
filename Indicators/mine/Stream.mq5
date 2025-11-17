@@ -101,8 +101,7 @@ string NormalizeSymbol(const string sym)
     if(len>3)
        {
          string tail = StringSubstr(sym,len-3,3);
-         if(StringToLower(tail)=="rfd")
-             return(StringSubstr(sym,0,len-3));
+         return(StringSubstr(sym,0,len-3));
        }
     return(sym);
    }
