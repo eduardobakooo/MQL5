@@ -33,6 +33,7 @@ int OnInit()
      }
    
    Print("Connected to Redis successfully");
+   Print("KEYS: ", AskKey(), BidKey(), OrdersKey(), AccountKey() );
 //---
    return(INIT_SUCCEEDED);
   }
@@ -78,17 +79,32 @@ int OnCalculate(const int rates_total,
 //+------------------------------------------------------------------+
 string DataKey()
    {
-      return("series:" + _Symbol + ":" + (string)_Period + ":data");
+      return("series:" + NormalizeSymbol(_Symbol) + ":" + (string)_Period + ":data");
    }
    
 string AskKey()
    {
-      return(_Symbol + ":ask");
+      return(NormalizeSymbol(_Symbol) + ":ask");
    }   
    
 string BidKey()
    {
-      return(_Symbol + ":bid");
+         return(NormalizeSymbol(_Symbol) + ":bid");
+   }
+
+//+------------------------------------------------------------------+
+//| Normalize symbol name - remove common broker suffixes like 'rfd' |
+//+------------------------------------------------------------------+
+string NormalizeSymbol(const string sym)
+   {
+    int len = StringLen(sym);
+    if(len>3)
+       {
+         string tail = StringSubstr(sym,len-3,3);
+         if(StringToLower(tail)=="rfd")
+             return(StringSubstr(sym,0,len-3));
+       }
+    return(sym);
    }
    
 string AccountKey()

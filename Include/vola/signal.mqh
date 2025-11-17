@@ -121,6 +121,20 @@ int Signal()
 //+------------------------------------------------------------------+
 string SignalKey()
    {
-      return(_Symbol + ":" + IntegerToString(_Period) + ":signal");
+         return(NormalizeSymbol(_Symbol) + ":" + IntegerToString(_Period) + ":signal");
+   }
+//+------------------------------------------------------------------+
+//| Normalize symbol name - remove common broker suffixes like 'rfd' |
+//+------------------------------------------------------------------+
+string NormalizeSymbol(const string sym)
+   {
+    int len = StringLen(sym);
+    if(len>3)
+       {
+         string tail = StringSubstr(sym,len-3,3);
+         if(StringToLower(tail)=="rfd")
+             return(StringSubstr(sym,0,len-3));
+       }
+    return(sym);
    }
 //+------------------------------------------------------------------+

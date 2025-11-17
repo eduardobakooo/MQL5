@@ -56,6 +56,7 @@ int OnInit()
    
    Print("Stop Level: ", stop_level);   
    Print("Point: ", point);
+   Print("Signal Key: ", SignalKey());
 
    orders_total = LoadOrders();
 
